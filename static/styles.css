@@ -1,0 +1,54 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    background-color: #f0e1e1;
+    color: #0f0f0f;
+    font-family: Arial, sans-serif;
+}
+
+.auth-link {
+    font-size: 1.5em;
+}
+
+a {
+    color: #066bd8;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+img {
+    width: auto;
+    max-width: 50%;
+    height: auto;
+    display: block;
+    margin: 5px;
+}
+
+.images-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
