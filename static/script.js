@@ -23,11 +23,4 @@ document.addEventListener("DOMContentLoaded", function(){
         });
     }
 
-    const logoutButton = document.getElementById("logout-button");
-    if (logoutButton) {
-        logoutButton.addEventListener("click", function() {
-            console.log("Logout initiated");
-        });
-    }
-
 })
