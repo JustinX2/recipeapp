@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="recipe-form">
+    <h2>{{ form_title }}</h2>
+    <form action="" method="post">
+        {{ form.hidden_tag }}
+        <div>
+            <input type="text" name="title" placeholder="Title" value="{{ recipe.title if recipe else '' }}" required>
+        </div>
+        <div>
+            <textarea name="description" placeholder="Description" required>{{ recipe.description if recipe else '' }}</textarea>
+        </div>
+        <div>
+            <textarea name="ingredients" placeholder="Ingredients - Separate by comma" required>{{ recipe.ingredients if recipe else '' }}</textarea>
+        </div>
+        <div>
+            <textarea name="instructions" placeholder="Instructions" required>{{ recipe.instructions if recipe else '' }}</textarea>
+        </div>
+        <div>
+            <label for="image_url">Image URL</label>
+            <input type="text" name="image_url" placeholder="Image URL" value="{{ recipe.image_url if recipe else '' }}">
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+<p>Return to <a href="{{ url_for('index') }}">index</a> page</p>
+{% endblock %}

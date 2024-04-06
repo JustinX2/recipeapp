@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="homepage">
+    <h1>Welcome to Your Favourite Recipes Website!</h1>
+    <p>Create and share your recipes, discover new recipes, and enjoy the taste of your homemade goodness.</p>
+    <div class="recipe-list">
+        <div>
+            <a href="{{ url_for('create_recipe') }}">Create New Recipe</a>
+        </div>
+        <div>
+            <a href="{{ url_for('search_recipes') }}">Search Recipes</a>
+        </div>
+        <div>
+            <a href="{{ url_for('profile') }}">Your Profile</a>
+        </div>
+        <h2>Your Recipes</h2>
+        <ul>
+            {% for recipe in recipes %}
+            <li>
+                <a href="{{ url_for('recipe_detail', recipe_id=recipe.id) }}">{{ recipe.title }}</a>
+                <a href="{{ url_for('update_recipe', recipe_id=recipe.id) }}">Edit</a>
+                <form action="{{ url_for('delete_recipe', recipe_id=recipe.id) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this recipe?');">
+                    {{ form.hidden_tag }}
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="images-container">
+        <img src="https://www.themealdb.com/images/media/meals/oe8rg51699014028.jpg">
+    </div>
+</div>
+{% endblock %}
