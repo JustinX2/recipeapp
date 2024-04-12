@@ -11,8 +11,12 @@
         <header>
             <nav>
                 <ul>
+                    {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('logout') }}" class="auth-link">Logout</a></li>
+                    {% else %}
                     <li><a href="{{ url_for('login') }}" class="auth-link">Login</a></li>
                     <li><a href="{{ url_for('register') }}" class="auth-link">Register</a></li>
+                    {% endif %}
                 </ul>
             </nav>
         </header>
