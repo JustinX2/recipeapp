@@ -4,7 +4,7 @@
 <div class="recipe-form">
     <h2>{{ form_title }}</h2>
     <form action="" method="post">
-        {{ form.hidden_tag }}
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <div>
             <input type="text" name="title" placeholder="Title" value="{{ recipe.title if recipe else '' }}" required>
         </div>
@@ -12,7 +12,7 @@
             <textarea name="description" placeholder="Description" required>{{ recipe.description if recipe else '' }}</textarea>
         </div>
         <div>
-            <textarea name="ingredients" placeholder="Ingredients" required>{{ recipe.ingredients if recipe else '' }}</textarea>
+            <textarea name="ingredients" placeholder="Ingredients - Separate by comma" required>{{ recipe.ingredients if recipe else '' }}</textarea>
         </div>
         <div>
             <textarea name="instructions" placeholder="Instructions" required>{{ recipe.instructions if recipe else '' }}</textarea>
