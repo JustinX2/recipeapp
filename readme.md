@@ -12,7 +12,7 @@ The recipe app allows users to create, update, and delete recipes. The app also 
 ## Webpage Flow
 1. base.html: The base template provides Register and Login function. 
 2. index.html: The homepage that displays the user's recipes, with options to create, update, and delete recipes. It also allows users to search for recipes from TheMealDB. There is also a link to the user profile page (profile.html)
-3. register.html: The registration page where users can create a new account.
+3. register.html: The registration page where users can create new accounts.
 4. login.html: The login page where users can enter their email and password to log in.
 5. profile.html: The user's profile page, displaying their username, password and email.
 6. recipe_form.html: The page for creating a recipe, with fields for the title, description, ingredients, instructions, and image URL.
