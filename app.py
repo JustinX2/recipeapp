@@ -1,11 +1,11 @@
 from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_debugtoolbar import DebugToolbarExtension
-from flask_bcrypt import Bcrypt
 from flask_wtf.csrf import CSRFProtect
-from models import db, User, Recipe, connect_db
+from models import db, User, Recipe
 from forms import RegisterForm, LoginForm, RecipeForm
 import requests
+import logging
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///flasklogin"
@@ -13,11 +13,12 @@ app.config['SECRET_KEY'] = 'abc'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = True
-app.config['DEBUG'] = True
 
-connect_db(app)
+# Logging in set up
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 csrf = CSRFProtect(app)
-bcrypt = Bcrypt(app)
 toolbar = DebugToolbarExtension(app)
 
 login_manager = LoginManager()
@@ -42,12 +43,17 @@ def index():
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(username=form.username.data, email=form.email.data, password_hash=hashed_password)
+        user = User(username=form.username.data, email=form.email.data)
+        user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
-        flash('Registration successful! Please log in.', 'success')
+        flash('Registration Successful! Please log in.', 'success')
         return redirect(url_for('login'))
+    else:
+        if form.errors:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    flash(f"{field.capitalize()} - {error}", "danger")
     return render_template('register.html', form=form)
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -55,19 +61,18 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user and bcrypt.check_password_hash(user.password_hash, form.password.data):
-            login_user(user, remember=True)
-            flash('You have been logged in!', 'success')
+        if user and user.check_password(form.password.data):
+            login_user(user)
+            flash('Logged in Successfully', 'success')
             return redirect(url_for('index'))
-        else:
-            flash('Login Failed. Invalid email or password.', 'danger')
+        flash('Invalid email and password combination', 'danger')
     return render_template('login.html', form=form)
 
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
-    flash('You have been logged out.', 'info')
+    flash('You have been successfully logged out', 'info')
     return redirect(url_for('login'))
 
 @app.route('/profile')
@@ -80,14 +85,14 @@ def profile():
 def create_recipe():
     form = RecipeForm()
     if form.validate_on_submit():
-        new_recipe = Recipe(
+        recipe = Recipe(
             title=form.title.data,
             ingredients=form.ingredients.data,
             instructions=form.instructions.data,
             image_url=form.image_url.data,
-            user_id=current_user.id
+            author=current_user
         )
-        db.session.add(new_recipe)
+        db.session.add(recipe)
         db.session.commit()
         flash('Recipe successfully created!', 'success')
         return redirect(url_for('index'))
@@ -102,8 +107,8 @@ def recipe_detail(recipe_id):
 @login_required
 def update_recipe(recipe_id):
     recipe = Recipe.query.get_or_404(recipe_id)
-    if recipe.author.id != current_user.id:
-        flash('You are not authorized to update this recipe.', 'danger')
+    if recipe.author != current_user:
+        flash('You are not authorized to update this recipe!', 'danger')
         return redirect(url_for('index'))
     
     form = RecipeForm(obj=recipe)
@@ -121,8 +126,8 @@ def update_recipe(recipe_id):
 @login_required
 def delete_recipe(recipe_id):
     recipe = Recipe.query.get_or_404(recipe_id)
-    if recipe.author.id != current_user.id:
-        flash('You are not authorized to delete this recipe.', 'danger')
+    if recipe.author != current_user:
+        flash('You are not allowed to delete this recipe', 'danger')
         return redirect(url_for('index'))
     db.session.delete(recipe)
     db.session.commit()
@@ -154,10 +159,11 @@ def search_results():
             flash('Failed to find recipe', 'error')
             return redirect(url_for('search'))
 
-@app.errorhandler(Exception)
-def handle_error(e):
-    app.logger.error(f'An error occurred: {e}')
-    return 'An internal server error occurred. Please try again later.', 500
+@app.route('/database')
+def load_database():
+    with app.app_context():
+        db.create_all()
+    return 'Database created'
 
 if __name__ == '__main__':
     db.init_app(app)
