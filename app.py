@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, url_for, flash, request
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_wtf.csrf import CSRFProtect
-from models import db, User, Recipe, connect_db
+from models import db, User, Recipe, connect_db 
 from forms import RegisterForm, LoginForm, RecipeForm
 import requests
 import logging
@@ -12,9 +12,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///flasklogin"
 app.config['SECRET_KEY'] = 'abc'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
-app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = True
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
-connect_db(app)
+connect_db(app)  
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -25,15 +25,6 @@ toolbar = DebugToolbarExtension(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
-
-def init_db():
-    with app.app_context():
-        db.create_all()
-
-if __name__ == '__main__':
-    db.init_app(app)
-    init_db()
-    app.run(debug==True)
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -59,9 +50,7 @@ def register():
         db.session.commit()
         flash('Registration Successful! Please log in.', 'success')
         return redirect(url_for('login'))
-    print(form.errors)
     return render_template('register.html', form=form)
-
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -73,7 +62,6 @@ def login():
             flash('Logged in Successfully', 'success')
             return redirect(url_for('index'))
         flash('Invalid email and password combination', 'danger')
-    print(form.errors)
     return render_template('login.html', form=form)
 
 @app.route('/logout')
@@ -174,7 +162,6 @@ def load_database():
     return 'Database created'
 
 if __name__ == '__main__':
-    db.init_app(app)
     with app.app_context():
         db.create_all()
-    app.run(debug=True) 
+    app.run(debug=True)
