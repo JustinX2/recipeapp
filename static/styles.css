@@ -52,3 +52,13 @@ img {
     justify-content: center;
     gap: 10px;
 }
+
+.form-group .form-control-label {
+    text-align: left;
+    display: block;
+    font-weight: bold;
+}
+
+.form-group .form-control {
+    text-align: left;
+}
