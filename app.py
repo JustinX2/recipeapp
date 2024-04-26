@@ -8,13 +8,21 @@ import requests
 import logging
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///flasklogin"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:123@localhost:5434/flasklogin"
 app.config['SECRET_KEY'] = 'abc'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
-connect_db(app)  
+
+#context = app.app_context()
+#context.push()
+#db.create_all()
+
+with app.app_context():
+    connect_db(app)
+
+ 
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -43,11 +51,16 @@ def index():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
+    #if request.method == 'POST':
+        #print(request.form.get('username'))
+    print('Form:', form)
     if form.validate_on_submit():
+        print('hello')
         user = User(username=form.username.data, email=form.email.data)
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
+        print('User:', user)
         flash('Registration Successful! Please log in.', 'success')
         return redirect(url_for('login'))
     return render_template('register.html', form=form)
@@ -99,7 +112,7 @@ def recipe_detail(recipe_id):
     recipe = Recipe.query.get_or_404(recipe_id)
     return render_template('recipe_detail.html', recipe=recipe)
 
-@app.route('/recipe/<int:recipe_id>/update', methods=['GET', 'POST'])
+@app.route('/recipe/<int:recipe_id>/edit', methods=['GET', 'POST'])
 @login_required
 def update_recipe(recipe_id):
     recipe = Recipe.query.get_or_404(recipe_id)
@@ -118,17 +131,19 @@ def update_recipe(recipe_id):
         return redirect(url_for('recipe_detail', recipe_id=recipe.id))
     return render_template('update_recipe.html', form=form, recipe=recipe)
 
-@app.route('/recipe/<int:recipe_id>/delete', methods=['POST'])
+@app.route('/recipe/<int:recipe_id>/delete', methods=['GET', 'POST'])
 @login_required
 def delete_recipe(recipe_id):
     recipe = Recipe.query.get_or_404(recipe_id)
     if recipe.author != current_user:
         flash('You are not allowed to delete this recipe', 'danger')
         return redirect(url_for('index'))
-    db.session.delete(recipe)
-    db.session.commit()
-    flash('Recipe deleted successfully', 'success')
-    return redirect(url_for('index'))
+    if request.method == 'POST':
+        db.session.delete(recipe)
+        db.session.commit()
+        flash('Recipe deleted successfully', 'success')
+        return redirect(url_for('index'))
+    return render_template('delete_recipe.html', recipe=recipe)
 
 @app.route('/search', methods=['GET', 'POST'])
 def search_recipes():
@@ -161,7 +176,7 @@ def load_database():
         db.create_all()
     return 'Database created'
 
-if __name__ == '__main__':
+#if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(debug=True)
