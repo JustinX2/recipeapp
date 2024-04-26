@@ -26,6 +26,9 @@ class Recipe(db.Model):
     image_url = db.Column(db.String(250), nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
+
+
 def connect_db(app):
     db.app = app
     db.init_app(app)
+    db.create_all()
