@@ -23,5 +23,21 @@ The recipe app allows users to create, update, and delete recipes. The app also 
 11. search_results.html: The page that displays the results of a recipe search using the MealDB API.
 
 ## Webpage layout
-1. ![Screenshot of base.html](https://i.imgur.com/vmBqbiX.png)
-
+1. Screenshot of front page, base.html
+![Screenshot of base.html](https://i.imgur.com/vmBqbiX.png)
+2. Screenshot of registration page, regitser.html
+![Screenshot of register.html](https://i.imgur.com/9A5tZH9.png)
+3. Screenshot of login page, login.html
+![Screenshot of login.html](https://i.imgur.com/4oO3OFc.png)
+4. Screenshot of index page, index.html
+![Screenshot of index.html](https://i.imgur.com/GDhvJQL.png)
+5. Screenshot of recipe creation page, create_recipe.html
+![Screenshot of create_recipe.html](https://i.imgur.com/PXcza01.png)
+6. Screenshot of display created recipe page, recipe_detail.html
+![Screenshot of recipe_detail.html](https://i.imgur.com/CKztYPt.png)
+6. Screenshot of update recipe page, update_recipe.html
+![Screenshot of update_recipe.html](https://i.imgur.com/qJ9RjhE.png)
+7. Screenshot of recipe search using TheMealDB API, search.html
+![Screenshot of search.html](https://i.imgur.com/F7Ad6aX.png)
+8. Screenshot of search results, search_results.html
+![Screenshot of search_results.html](blob:https://imgur.com/25550e5c-3552-4834-8582-d0a5cd4f27d9)
