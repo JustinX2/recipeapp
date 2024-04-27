@@ -26,10 +26,8 @@ a, .btn {
     max-width: 960px;
     margin: 20px auto;
     text-align: left;
-    background-color: #ffffff;
+    background-color: transparents;
     padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .form-group {
