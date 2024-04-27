@@ -1,64 +1,139 @@
 body {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     min-height: 100vh;
     margin: 0;
     padding: 0;
     background-color: #f0e1e1;
     color: #0f0f0f;
-    font-family: Arial, sans-serif;
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.6;
 }
 
-.auth-link {
+.auth-link, .btn {
     font-size: 1.5em;
+}
+
+a, .btn {
+    color: #066bd8;
+    text-decoration: none;
+}
+
+.container {
+    width: 95%;
+    max-width: 960px;
+    margin: 20px auto;
+    text-align: left;
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.form-group .form-control-label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-group .form-control {
+    width: calc(100% - 20px);
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.alert-danger {
+    width: 100%;
+    text-align: center;
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.recipe-list {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.recipe-list h2, .homepage h1 {
+    text-align: left;
+}
+
+.recipe-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+.delete-btn {
+    padding: 5px 10px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.register-container h2,
+.register-container form,
+.register-container p {
+    text-align: left;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.form-group label,
+.form-group input,
+.form-group button {
+    display: block;
+    width: calc(100% - 20px);
+    box-sizing: border-box;
+}
+
+.form-group input,
+.form-group button {
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-group button {
+    background-color: #066bd8;
+    color: white;
+    border-color: #066bd8;
+    cursor: pointer;
+}
+
+.form-group button:hover {
+    background-color: #0056b3;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
 }
 
 a {
     color: #066bd8;
     text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-.container {
-    width: 90%;
-    max-width: 800px;
-    margin: 20px auto;
-    text-align: center;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-}
-
-img {
-    width: auto;
-    max-width: 50%;
-    height: auto;
-    display: block;
-    margin: 5px;
-}
-
-.images-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-}
-
-.form-group .form-control-label {
-    text-align: left;
-    display: block;
-    font-weight: bold;
-}
-
-.form-group .form-control {
-    text-align: left;
 }
