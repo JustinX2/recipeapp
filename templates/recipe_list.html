@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="recipe-list">
+    <h2>Recipes List</h2>
+    <ul>
+        {% for recipe in recipes %}
+        <li>
+            <div class="image-container">
+                {% if recipe.image_url %}
+                    <img src="{{ recipe.image_url }}" alt="{{ recipe.title }} image" class="recipe-image">
+                {% endif %}
+            </div>
+            <a href="{{ url_for('recipe_detail', id=recipe.id) }}">{{ recipe.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+<p>Return to <a href="{{ url_for('index') }}">index</a> page</p>
+{% endblock %}

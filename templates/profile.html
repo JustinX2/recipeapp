@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="user-profile">
+    <h2>Your Profile</h2>
+    <div>
+        <p><strong>Username:</strong> {{ user.username }}</p>
+    </div>
+    <div>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+    </div>
+    <div>
+        <p><strong>Password:</strong> {{ user.password }}</p>
+    </div>
+</div>
+<p>Return to <a href="{{ url_for('index') }}">index</a> page</p>
+{% endblock %}
