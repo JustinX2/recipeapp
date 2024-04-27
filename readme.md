@@ -40,4 +40,4 @@ The recipe app allows users to create, update, and delete recipes. The app also 
 7. Screenshot of recipe search using TheMealDB API, search.html
 ![Screenshot of search.html](https://i.imgur.com/F7Ad6aX.png)
 8. Screenshot of search results, search_results.html
-![Screenshot of search_results.html](blob:https://imgur.com/25550e5c-3552-4834-8582-d0a5cd4f27d9)
+![Screenshot of search_results.html](https://i.imgur.com/xIMeAQC.png)
