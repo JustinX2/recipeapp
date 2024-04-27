@@ -26,9 +26,9 @@ The recipe app allows users to create, update, and delete recipes. The app also 
 1. Screenshot of front page, base.html
 ![Screenshot of base.html](https://i.imgur.com/vmBqbiX.png)
 2. Screenshot of registration page, regitser.html
-![Screenshot of register.html](https://i.imgur.com/9A5tZH9.png)
+![Screenshot of register.html](https://i.imgur.com/0HuIpGe.png)
 3. Screenshot of login page, login.html
-![Screenshot of login.html](https://i.imgur.com/4oO3OFc.png)
+![Screenshot of login.html](https://i.imgur.com/95hyhCr.png)
 4. Screenshot of index page, index.html
 ![Screenshot of index.html](https://i.imgur.com/GDhvJQL.png)
 5. Screenshot of recipe creation page, create_recipe.html
